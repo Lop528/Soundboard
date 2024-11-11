@@ -20,7 +20,21 @@ struct ContentView: View {
                     .foregroundColor(.black)
                     .font(.custom("American Typewriter", size: 45))
                     .bold()
-                Spacer()
+                Button {
+                    playSound(song: "NationalAnthem")
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(width: 260, height: 60)
+                            .foregroundColor(.blue)
+                        Text("National Anthem")
+                            .frame(width: 150, height: 60)
+                            .foregroundColor(.white)
+                            .font(.custom("American Typewriter", size: 20))
+                            .bold()
+                    }
+                }
+//                Spacer()
                 Button() {
                     stopAllSounds()
                 } label: {
@@ -77,32 +91,32 @@ struct ContentView: View {
                             }
                         }
                         Button {
-                            playSound(song: " ")
+                            playSound(song: "FEIN")
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(width: 150, height: 150)
                                     .padding()
                                     .foregroundColor(.black)
-                                Text("Song Name")
+                                Text("FE!N")
                                     .frame(width: 150, height: 150)
                                     .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
+                                    .font(.custom("American Typewriter", size: 25))
                                     .bold()
                             }
                         }
                         Button {
-                            playSound(song: " ")
+                            playSound(song: "My House Snippet")
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(width: 150, height: 150)
                                     .padding()
                                     .foregroundColor(.black)
-                                Text("Song Name")
+                                Text("My House")
                                     .frame(width: 150, height: 150)
                                     .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
+                                    .font(.custom("American Typewriter", size: 25))
                                     .bold()
                             }
                         }
@@ -110,17 +124,17 @@ struct ContentView: View {
                     }
                     HStack{
                         Button {
-                            playSound(song: " ")
+                            playSound(song: "Back In Black")
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(width: 150, height: 150)
                                     .padding()
                                     .foregroundColor(.black)
-                                Text("Song Name")
+                                Text("Back in Black")
                                     .frame(width: 150, height: 150)
                                     .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
+                                    .font(.custom("American Typewriter", size: 25))
                                     .bold()
                             }
                         }
