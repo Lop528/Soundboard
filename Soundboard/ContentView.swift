@@ -9,7 +9,6 @@ import SwiftUI
 import AVFoundation
 
 struct ContentView: View {
-    
     @State private var player: AVAudioPlayer?
     @State private var fadeOutTimer: Timer?
     
