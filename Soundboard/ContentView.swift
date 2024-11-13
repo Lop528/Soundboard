@@ -13,28 +13,19 @@ struct ContentView: View {
     @State private var player: AVAudioPlayer?
     @State private var fadeOutTimer: Timer?
     
+    @State var fileNames = ["All I Do Is Win (1)", "Back In Black", "FEIN", "My House Snippet", "U Cant Touch This", "Crank That", "Eye Of The Tiger", "Alright Snippet", "Humble Snippet", "Party in the USA Snippet"]
+    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA"]
+    
     var body: some View {
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
+        
         VStack {
             HStack {
-                Text("   PHS Soundboard")
+                Text(" PHS Soundboard")
                     .foregroundColor(.black)
                     .font(.custom("American Typewriter", size: 45))
                     .bold()
-                Button {
-                    playSound(song: "NationalAnthem")
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15)
-                            .frame(width: 260, height: 60)
-                            .foregroundColor(.blue)
-                        Text("National Anthem")
-                            .frame(width: 150, height: 60)
-                            .foregroundColor(.white)
-                            .font(.custom("American Typewriter", size: 20))
-                            .bold()
-                    }
-                }
-//                Spacer()
+                Spacer()
                 Button() {
                     stopAllSounds()
                 } label: {
@@ -46,27 +37,26 @@ struct ContentView: View {
                             .bold()
                             .foregroundColor(.black)
                             .font(.custom("", size: 40))
-                       
+                        
                     }
+                    Text("")
                     
                 }
-                Text("     ")
             }
             .padding(10)
             Divider()
-            //            Spacer()
             ScrollView {
-                VStack {
-                    HStack {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(Array(zip(fileNames, songNames)), id: \.0) { i, name in
                         Button {
-                            playSound(song: "U Cant Touch This")
+                            playSound(song: i)
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(width: 150, height: 150)
                                     .padding()
                                     .foregroundColor(.black)
-                                Text("Can't Touch This")
+                                Text(name)
                                     .frame(width: 150, height: 150)
                                     .foregroundColor(.white)
                                     .font(.custom("American Typewriter", size: 25))
@@ -74,435 +64,23 @@ struct ContentView: View {
                                     .padding()
                             }
                         }
-                        
-                        Button {
-                            playSound(song: "All I Do Is Win (1)")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("All I Do Is Win")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 25))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: "FEIN")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("FE!N")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 25))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: "My House Snippet")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("My House")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 25))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: "Back In Black")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Back in Black")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 25))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
-                    }
-                    HStack{
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        Button {
-                            playSound(song: " ")
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text("Song Name")
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 20))
-                                    .bold()
-                            }
-                        }
-                        
                     }
                 }
             }
-            Spacer()
+            Button {
+                playSound(song: "NationalAnthem")
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: 500, height: 70)
+                        .foregroundColor(.blue)
+                    Text("National Anthem")
+                        .frame(height: 60)
+                        .foregroundColor(.white)
+                        .font(.custom("American Typewriter", size: 45))
+                        .bold()
+                }
+            }
         }
         .padding()
     }
@@ -564,6 +142,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()
