@@ -1,72 +1,59 @@
 import SwiftUI
-import MessageUI
 
 struct EmailView: View {
-    @State private var songTitle: String = ""
-    @State private var recipientEmail: String = ""
-    @State private var showEmailView: Bool = false
-    @State private var showError: Bool = false
-
+    
+    @State private var email = "odienhart6113@stu.d214.org, lseymour7370@stu.d214.org"
+    @State private var isCopied = false
+    
     var body: some View {
-        NavigationView {
-            VStack(spacing: 25) {
-               
-                Text("Suggest a Song")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
-                    .padding(.top, 20)
-
-                
-                VStack(alignment: .leading, spacing: 15) {
-                    TextField("Song Title", text: $songTitle)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-
-                    TextField("Recipient's Email", text: $recipientEmail)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        .padding(.horizontal)
-                }
-
-                // Submit Button
-                Button(action: {
-                    if MFMailComposeViewController.canSendMail() {
-                        showEmailView = true
-                    } else {
-                        showError = true
-                    }
-                }) {
-                    Text("Send Suggestion")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                        .shadow(radius: 3)
-                }
+        VStack(spacing: 20) {
+            Text("Suggest a Song")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.blue)
+                .multilineTextAlignment(.center)
                 .padding(.horizontal)
-
-                Spacer()
+            
+            Text("""
+                If you would like to suggest a song, please send the following details to:
+                """)
+                .font(.body)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal)
+            
+            Text("Email: \(email)")
+                .font(.body)
+                .padding()
+            
+            Button(action: {
+                copyToClipboard()
+            }) {
+                Label("Copy Emails", systemImage: isCopied ? "checkmark.circle.fill" : "doc.on.doc")
+                    .foregroundColor(isCopied ? .green : .blue)
             }
-            .navigationTitle("Song Suggestion")
-            .sheet(isPresented: $showEmailView) {
-                EmailView()
-                    subject: "Song Suggestion",
-                    body: "Hi,\n\nI would like to suggest the song: \(songTitle).\n\nEnjoy!",
-                    recipient: recipientEmail
-                )
-            }
-            .alert(isPresented: $showError) {
-                Alert(
-                    title: Text("Error"),
-                    message: Text("Mail services are not available on this device."),
-                    dismissButton: .default(Text("OK"))
-                )
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
+            .shadow(radius: 3)
+            .onChange(of: isCopied) { _ in
+                // Reset the "copied" state after 2 seconds
+                if isCopied {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        isCopied = false
+                    }
+                }
             }
         }
+        .padding()
     }
+    
+    private func copyToClipboard() {
+        UIPasteboard.general.string = email
+        isCopied = true
+    }
+}
+
+#Preview {
+    EmailView()
 }
 
