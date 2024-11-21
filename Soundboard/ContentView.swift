@@ -47,13 +47,13 @@ struct ContentView: View {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(Array(zip(fileNames, songNames)), id: \.0) { i, name in
                         Button {
-                            playSound(song: i)
+                            playSound(song: name)
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color.black.opacity(0.7))
                                     .frame(width: 200, height: 200)
-                                    .shadow(color: .black, radius: 10)
+                                    .shadow(color: currentSong == name ? .blue : .clear, radius: 10, x: 0, y: 0)
                                 
                                 VStack(spacing: 0) {
                                     
