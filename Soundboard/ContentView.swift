@@ -11,6 +11,7 @@ import AVFoundation
 struct ContentView: View {
     @State private var player: AVAudioPlayer?
     @State private var fadeOutTimer: Timer?
+    @State private var currentSong: String? = nil
     
     @State var fileNames = ["All I Do Is Win (1)", "Back In Black", "FEIN", "My House Snippet", "U Cant Touch This", "Crank That", "Eye Of The Tiger", "Alright Snippet", "Humble Snippet", "Party in the USA Snippet"]
     @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA"]
@@ -38,8 +39,6 @@ struct ContentView: View {
                             .font(.custom("", size: 40))
                         
                     }
-                    Text("")
-                    
                 }
             }
             .padding(10)
@@ -48,13 +47,14 @@ struct ContentView: View {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(Array(zip(fileNames, songNames)), id: \.0) { i, name in
                         Button {
-                            playSound(song: i)
+                            playSound(song: name)
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .frame(width: 150, height: 150)
                                     .padding()
                                     .foregroundColor(.black)
+                                    .shadow(color: currentSong == name ? .yellow : .clear, radius: 10, x: 0, y: 0)
                                 Text(name)
                                     .frame(width: 150, height: 150)
                                     .foregroundColor(.white)
@@ -70,12 +70,13 @@ struct ContentView: View {
                 playSound(song: "NationalAnthem")
             } label: {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .frame(width: 500, height: 70)
-                        .foregroundColor(.blue)
+                        Image("USA")
+                            .resizable()
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .frame(width: 400, height: 100)
                     Text("National Anthem")
-                        .frame(height: 60)
-                        .foregroundColor(.white)
+                        .frame(height: 100)
+                        .foregroundColor(.black)
                         .font(.custom("American Typewriter", size: 45))
                         .bold()
                 }
@@ -83,21 +84,9 @@ struct ContentView: View {
         }
         .padding()
     }
-    //     mutating func playSound(song: String) {
-    //        guard let url = Bundle.main.url(forResource: song, withExtension: "mp3") else {
-    //            print("Could not find the sound file \(song).mp3")
-    //            return
-    //        }
-    //
-    //        do {
-    //
-    //            player = try AVAudioPlayer(contentsOf: url)
-    //            player?.play()
-    //        } catch {
-    //            print("Error playing sound: \(error.localizedDescription)")
-    //        }
-    //    }
+
     func playSound(song: String) {
+        currentSong = song
         guard let url = Bundle.main.url(forResource: song, withExtension: "mp3") else {
             print("Could not find the sound file \(song).mp3")
             return
@@ -111,11 +100,7 @@ struct ContentView: View {
         }
     }
     
-    //    func stopAllSounds() {
-    //            if player?.isPlaying == true {
-    //                player?.stop()
-    //            }
-    //        }
+
     func stopAllSounds() {
         guard let player = player, player.isPlaying else { return }
         
@@ -124,6 +109,9 @@ struct ContentView: View {
         
         // Start the fade-out effect
         fadeOut(volumeDecreaseInterval: 0.1, duration: 2.0)
+        
+        // Reset the current song when stopping
+        currentSong = nil
     }
     func fadeOut(volumeDecreaseInterval: TimeInterval, duration: TimeInterval) {
         guard let player = player else { return }
@@ -136,7 +124,9 @@ struct ContentView: View {
                 player.volume -= volumeStep
             } else {
                 timer.invalidate()
-                player.stop()  // Stop the player once volume reaches zero
+                player.stop()
+                // Stop the player once volume reaches zero
+                currentSong = nil
             }
         }
     }
