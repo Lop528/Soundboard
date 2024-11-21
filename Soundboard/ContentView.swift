@@ -53,7 +53,7 @@ struct ContentView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color.black.opacity(0.7))
                                     .frame(width: 200, height: 200)
-                                    .shadow(color: .black, radius: 10)
+                                    .shadow(color: .red, radius: 10)
                                 
                                 VStack(spacing: 0) {
                                     
