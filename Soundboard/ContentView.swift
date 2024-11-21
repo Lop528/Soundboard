@@ -47,7 +47,7 @@ struct ContentView: View {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(Array(zip(fileNames, songNames)), id: \.0) { i, name in
                         Button {
-                            playSound(song: name)
+                            playSound(song: i)
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
