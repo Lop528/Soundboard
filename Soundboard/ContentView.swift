@@ -112,20 +112,7 @@ struct ContentView: View {
         }
         .padding()
     }
-    //     mutating func playSound(song: String) {
-    //        guard let url = Bundle.main.url(forResource: song, withExtension: "mp3") else {
-    //            print("Could not find the sound file \(song).mp3")
-    //            return
-    //        }
-    //
-    //        do {
-    //
-    //            player = try AVAudioPlayer(contentsOf: url)
-    //            player?.play()
-    //        } catch {
-    //            print("Error playing sound: \(error.localizedDescription)")
-    //        }
-    //    }
+
     func playSound(song: String) {
         currentSong = song
         guard let url = Bundle.main.url(forResource: song, withExtension: "mp3") else {
@@ -151,6 +138,7 @@ struct ContentView: View {
         // Start the fade-out effect
         fadeOut(volumeDecreaseInterval: 0.1, duration: 2.0)
         
+        // Reset the current song when stopping
         currentSong = nil
     }
     func fadeOut(volumeDecreaseInterval: TimeInterval, duration: TimeInterval) {
