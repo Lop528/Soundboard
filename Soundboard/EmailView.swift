@@ -1,46 +1,59 @@
-//
-//  EmailView.swift
-//  Soundboard
-//
-//  Created by Liam K. Seymour on 11/7/24.
-//
-
 import SwiftUI
-import MessageUI
 
 struct EmailView: View {
-    @State private var songTitle: String = ""
-    @State private var recipientEmail: String = ""
-    @State private var showMailComposer: Bool = false
-    @State private var showError: Bool = false
+    
+    @State private var email = "odienhart6113@stu.d214.org, lseymour7370@stu.d214.org"
+    @State private var isCopied = false
     
     var body: some View {
         VStack(spacing: 20) {
-            TextField("Enter song title", text: $songTitle)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+            Text("Suggest a Song")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.blue)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
             
-            TextField("Enter recipient's email", text: $recipientEmail)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
+            Text("""
+                If you would like to suggest a song, please send the following details to:
+                """)
+                .font(.body)
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal)
+            
+            Text("Email: \(email)")
+                .font(.body)
                 .padding()
             
             Button(action: {
-                if MFMailComposeViewController.canSendMail() {
-                    showMailComposer = true
-                } else {
-                    showError = true
-                }
+                copyToClipboard()
             }) {
-                Text("Suggest Song")
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                
-                
+                Label("Copy Emails", systemImage: isCopied ? "checkmark.circle.fill" : "doc.on.doc")
+                    .foregroundColor(isCopied ? .green : .blue)
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(8)
+            .shadow(radius: 3)
+            .onChange(of: isCopied) { _ in
+                // Reset the "copied" state after 2 seconds
+                if isCopied {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        isCopied = false
+                    }
+                }
             }
         }
+        .padding()
+    }
+    
+    private func copyToClipboard() {
+        UIPasteboard.general.string = email
+        isCopied = true
     }
 }
+
+#Preview {
+    EmailView()
+}
+
