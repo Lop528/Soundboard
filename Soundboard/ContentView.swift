@@ -13,8 +13,8 @@ struct ContentView: View {
     @State private var fadeOutTimer: Timer?
     @State private var currentSong: String? = nil
     
-    @State var fileNames = ["All I Do Is Win (1)", "Back In Black", "FEIN", "My House Snippet", "U Cant Touch This", "Crank That", "Eye Of The Tiger", "Alright Snippet", "Humble Snippet", "Party in the USA Snippet", "insert thunderstruck", "Guns N roses"]
-    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Thunderstruck", "Guns 'N Roses"]
+    @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Guns 'N Roses"]
+    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Guns 'N Roses"]
     
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
