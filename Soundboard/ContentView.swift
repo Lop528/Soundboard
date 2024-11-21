@@ -12,11 +12,11 @@ struct ContentView: View {
     @State private var player: AVAudioPlayer?
     @State private var fadeOutTimer: Timer?
     
-    @State var fileNames = ["All I Do Is Win (1)", "Back In Black", "FEIN", "My House Snippet", "U Cant Touch This", "Crank That", "Eye Of The Tiger", "Alright Snippet", "Humble Snippet", "Party in the USA Snippet"]
-    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA"]
+    @State var fileNames = ["All I Do Is Win (1)", "Back In Black", "FEIN", "My House Snippet", "U Cant Touch This", "Crank That", "Eye Of The Tiger", "Alright Snippet", "Humble Snippet", "Party in the USA Snippet", "insert thunderstruck", "Guns N roses"]
+    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Thunderstruck", "Guns 'N Roses"]
     
     var body: some View {
-        let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
         
         VStack {
             HStack {
@@ -38,7 +38,6 @@ struct ContentView: View {
                             .font(.custom("", size: 40))
                         
                     }
-                    Text("")
                     
                 }
             }
@@ -52,18 +51,47 @@ struct ContentView: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .frame(width: 150, height: 150)
-                                    .padding()
-                                    .foregroundColor(.black)
-                                Text(name)
-                                    .frame(width: 150, height: 150)
-                                    .foregroundColor(.white)
-                                    .font(.custom("American Typewriter", size: 25))
-                                    .bold()
-                                    .padding()
+                                    .fill(Color.black.opacity(0.7))
+                                    .frame(width: 200, height: 200)
+                                    .shadow(color: .black, radius: 10)
+                                
+                                VStack(spacing: 0) {
+                                    
+                                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                            .fill(Color.blue)
+                                            .frame(height: 50)
+                                            .overlay(
+                                                Text("Header Title")
+                                                    .foregroundColor(.white)
+                                                    .font(.headline)
+                                                    .bold()
+                                            )
+                                    
+                                    VStack {
+                                        Text(name)
+                                            .foregroundColor(.white)
+                                            .font(.custom("", size: 30))
+                                            .multilineTextAlignment(.center)
+                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                            .bold()
+                                        Button {
+                                            songNames.insert(name, at: 0)
+                                            fileNames.insert(i, at: 0)
+                                        } label: {
+                                            Text("Favorite")
+                                                .offset(y: -5)
+                                                .font(.custom("", size: 23))
+                                        }
+                                        
+                                    }
+                                }
+                                .frame(width: 200, height: 200)
                             }
+                            .padding()
+                            
                         }
                     }
+                    
                 }
             }
             Button {

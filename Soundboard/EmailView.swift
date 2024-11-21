@@ -4,6 +4,10 @@ struct EmailView: View {
     
     @State private var email = "odienhart6113@stu.d214.org, lseymour7370@stu.d214.org"
     @State private var isCopied = false
+    @State private var songTitle: String = ""
+    @State private var recipientEmail: String = "lseymour7370@stu.d214.org"
+    @State private var showMailComposer: Bool = false
+    @State private var showError: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
