@@ -13,18 +13,32 @@ struct ContentView: View {
     @State private var fadeOutTimer: Timer?
     @State private var currentSong: String? = nil
     
-    @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Guns 'N Roses"]
-    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Guns 'N Roses"]
+    @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
+    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
     
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
         
         VStack {
             HStack {
-                Text(" PHS Soundboard")
+                Text("  PHS Soundboard")
                     .foregroundColor(.black)
                     .font(.custom("American Typewriter", size: 45))
                     .bold()
+                Spacer()
+                Button() {
+                    playRandomSong()
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(width: 200, height: 60)
+                            .foregroundColor(.blue)
+                        Text("Random")
+                            .foregroundColor(.black)
+                            .font(.custom("American Typewriter", size: 40))
+                        
+                    }
+                }
                 Spacer()
                 Button() {
                     stopAllSounds()
@@ -40,6 +54,7 @@ struct ContentView: View {
                         
                     }
                 }
+                Text("  ")
             }
             .padding(10)
             Divider()
@@ -57,15 +72,15 @@ struct ContentView: View {
                                 
                                 VStack(spacing: 0) {
                                     
-                                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                            .fill(Color.blue)
-                                            .frame(height: 50)
-                                            .overlay(
-                                                Text("Header Title")
-                                                    .foregroundColor(.white)
-                                                    .font(.headline)
-                                                    .bold()
-                                            )
+//                                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+//                                            .fill(Color.blue)
+//                                            .frame(height: 50)
+//                                            .overlay(
+//                                                Text("Header Title")
+//                                                    .foregroundColor(.white)
+//                                                    .font(.headline)
+//                                                    .bold()
+//                                            )
                                     
                                     VStack {
                                         Text(name)
@@ -158,6 +173,14 @@ struct ContentView: View {
             }
         }
     }
+    func playRandomSong() {
+        if let randomSong = fileNames.randomElement() {
+            playSound(song: randomSong)
+        } else {
+            print("The fileNames array is empty.")
+        }
+    }
+
 }
 
 
