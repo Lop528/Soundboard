@@ -15,7 +15,7 @@ struct ContentView: View {
     
     @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
     @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
-    @State var authors = ["DJ Khaled", "AC/DC", "Fein Author", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses"]
+    @State var authors = ["DJ Khaled", "AC/DC", "Travis Scott", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses"]
 
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
@@ -59,6 +59,13 @@ struct ContentView: View {
             }
             .padding(10)
             Divider()
+            HStack {
+                Text("    Filters")
+                    .font(.custom("", size: 30))
+                Image(systemName: "line.3.horizontal.circle")
+                    .font(.custom("", size: 35))
+                Spacer()
+            }
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(Array(zip(fileNames.indices, zip(fileNames, songNames))), id: \.0) { index, song in
@@ -70,8 +77,11 @@ struct ContentView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color.black.opacity(1))
                                     .frame(width: 200, height: 200)
+                                    .shadow(color: .black, radius: 8)
                                 VStack(spacing: 10) {
+                                    Spacer()
                                     Text(songName)
+                                        .frame(width: 180)
                                         .foregroundColor(.white)
                                         .font(.custom("", size: 30))
                                         .multilineTextAlignment(.center)
