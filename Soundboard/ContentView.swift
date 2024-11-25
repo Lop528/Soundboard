@@ -66,10 +66,8 @@ struct ContentView: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color.black.opacity(0.7))
+                                    .fill(Color.black.opacity(1))
                                     .frame(width: 200, height: 200)
-                                    .shadow(color: currentSong == name ? .blue : .clear, radius: 10, x: 0, y: 0)
-                                
                                 VStack(spacing: 0) {
                                     
 //                                        RoundedRectangle(cornerRadius: 15, style: .continuous)
