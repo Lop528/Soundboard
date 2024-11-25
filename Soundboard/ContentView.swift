@@ -15,7 +15,8 @@ struct ContentView: View {
     
     @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
     @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
-    
+    @State var authors = ["DJ Khaled", "AC/DC", "Fein Author", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses"]
+
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
         
@@ -60,51 +61,33 @@ struct ContentView: View {
             Divider()
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Array(zip(fileNames, songNames)), id: \.0) { i, name in
+                    ForEach(Array(zip(fileNames.indices, zip(fileNames, songNames))), id: \.0) { index, song in
+                        let (fileName, songName) = song
                         Button {
-                            playSound(song: name)
+                            playSound(song: songName)
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color.black.opacity(1))
                                     .frame(width: 200, height: 200)
-                                VStack(spacing: 0) {
-                                    
-//                                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-//                                            .fill(Color.blue)
-//                                            .frame(height: 50)
-//                                            .overlay(
-//                                                Text("Header Title")
-//                                                    .foregroundColor(.white)
-//                                                    .font(.headline)
-//                                                    .bold()
-//                                            )
-                                    
-                                    VStack {
-                                        Text(name)
-                                            .foregroundColor(.white)
-                                            .font(.custom("", size: 30))
-                                            .multilineTextAlignment(.center)
-                                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                            .bold()
-                                        Button {
-                                            songNames.insert(name, at: 0)
-                                            fileNames.insert(i, at: 0)
-                                        } label: {
-                                            Text("Favorite")
-                                                .offset(y: -5)
-                                                .font(.custom("", size: 23))
-                                        }
-                                        
-                                    }
+                                VStack(spacing: 10) {
+                                    Text(songName)
+                                        .foregroundColor(.white)
+                                        .font(.custom("", size: 30))
+                                        .multilineTextAlignment(.center)
+                                        .bold()
+                                    Spacer()
+                                    Text(authors[index])
+                                        .foregroundColor(.gray)
+                                        .font(.custom("", size: 20))
+                                        .multilineTextAlignment(.center)
                                 }
-                                .frame(width: 200, height: 200)
+                                .padding(.vertical, 10)
                             }
                             .padding()
-                            
                         }
                     }
-                    
+
                 }
             }
             Button {
