@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 
 struct ContentView: View {
+    
     @State private var player: AVAudioPlayer?
     @State private var fadeOutTimer: Timer?
     @State private var currentSong: String? = nil
@@ -16,7 +17,10 @@ struct ContentView: View {
     @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
     @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
     @State var authors = ["DJ Khaled", "AC/DC", "Travis Scott", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses"]
-
+    @State var filters = ["Pop", "Rock", "Hip Hop", "Pop", "Pop", "Hip Hop", "Rock", "Hip Hop", "Hip Hop", "Pop", "Rock"]
+    
+    @State private var selectedFilter: String = "All"
+    
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
         
@@ -60,15 +64,27 @@ struct ContentView: View {
             .padding(10)
             Divider()
             HStack {
-                Text("    Filters")
-                    .font(.custom("", size: 30))
+//                                Text("    Filters")
+//                                    .font(.custom("", size: 30))
+                Menu {
+                    Button("Hip Hop") { selectedFilter = "Hip Hop" }
+                    Button("Country") { selectedFilter = "Country" }
+                    Button("Rock") { selectedFilter = "Rock" }
+                    Button("Pop") { selectedFilter = "Pop" }
+                } label: {
+                    Text(selectedFilter)
+                        .foregroundColor(.black)
+                        .padding()
+                }
+                .font(.custom("", size: 30))
                 Image(systemName: "line.3.horizontal.circle")
-                    .font(.custom("", size: 35))
+                    .font(.custom("", size: 30))
                 Spacer()
             }
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Array(zip(fileNames.indices, zip(fileNames, songNames))), id: \.0) { index, song in
+                    ForEach(Array(zip(fileNames.indices, zip(fileNames, songNames)))
+                            .filter { selectedFilter == "All" || filters[$0.0] == selectedFilter }, id: \.0) { index, song in
                         let (fileName, songName) = song
                         Button {
                             playSound(song: songName)
@@ -79,7 +95,11 @@ struct ContentView: View {
                                     .frame(width: 200, height: 200)
                                     .shadow(color: .black, radius: 8)
                                 VStack(spacing: 10) {
-                                    Button
+                                    Button() {
+                                        
+                                    } label: {
+                                        
+                                    }
                                     Spacer()
                                     Text(songName)
                                         .frame(width: 180)
@@ -88,6 +108,10 @@ struct ContentView: View {
                                         .multilineTextAlignment(.center)
                                         .bold()
                                     Spacer()
+                                    Text(filters[index])
+                                        .foregroundColor(.gray)
+                                        .font(.custom("", size: 20))
+                                        .multilineTextAlignment(.center)
                                     Text(authors[index])
                                         .foregroundColor(.gray)
                                         .font(.custom("", size: 20))
@@ -98,17 +122,17 @@ struct ContentView: View {
                             .padding()
                         }
                     }
-
+                    
                 }
             }
             Button {
                 playSound(song: "NationalAnthem")
             } label: {
                 ZStack {
-                        Image("USA")
-                            .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                            .frame(width: 400, height: 100)
+                    Image("USA")
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .frame(width: 400, height: 100)
                     Text("National Anthem")
                         .frame(height: 100)
                         .foregroundColor(.black)
@@ -119,7 +143,7 @@ struct ContentView: View {
         }
         .padding()
     }
-
+    
     func playSound(song: String) {
         currentSong = song
         guard let url = Bundle.main.url(forResource: song, withExtension: "mp3") else {
@@ -135,7 +159,7 @@ struct ContentView: View {
         }
     }
     
-
+    
     func stopAllSounds() {
         guard let player = player, player.isPlaying else { return }
         
@@ -172,7 +196,7 @@ struct ContentView: View {
             print("The fileNames array is empty.")
         }
     }
-
+    
 }
 
 
