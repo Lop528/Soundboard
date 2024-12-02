@@ -79,6 +79,7 @@ struct ContentView: View {
                                     .frame(width: 200, height: 200)
                                     .shadow(color: .black, radius: 8)
                                 VStack(spacing: 10) {
+                                    Button
                                     Spacer()
                                     Text(songName)
                                         .frame(width: 180)
