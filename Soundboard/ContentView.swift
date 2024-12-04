@@ -64,21 +64,25 @@ struct ContentView: View {
             .padding(10)
             Divider()
             HStack {
-//                                Text("    Filters")
-//                                    .font(.custom("", size: 30))
                 Menu {
+                    Button("All") { selectedFilter = "All" }
                     Button("Hip Hop") { selectedFilter = "Hip Hop" }
                     Button("Country") { selectedFilter = "Country" }
                     Button("Rock") { selectedFilter = "Rock" }
                     Button("Pop") { selectedFilter = "Pop" }
                 } label: {
-                    Text(selectedFilter)
-                        .foregroundColor(.black)
-                        .padding()
+                    HStack {
+                        Text("Filters: \(selectedFilter)")
+                            .foregroundColor(.black)
+                            .font(.custom("", size: 30))
+                            .padding()
+                        Image(systemName: "line.3.horizontal.circle")
+                            .foregroundColor(.black)
+                            .font(.custom("", size: 30))
+                    }
                 }
-                .font(.custom("", size: 30))
-                Image(systemName: "line.3.horizontal.circle")
-                    .font(.custom("", size: 30))
+//                .font(.custom("", size: 30))
+
                 Spacer()
             }
             ScrollView {
