@@ -94,18 +94,20 @@ struct ContentView: View {
                             .font(.custom("", size: 30))
                     }
                 }
-                Spacer()
+                if selectedFilter == "All" {
+                    HStack {
+                        TextField("Search songs...", text: $searchQuery)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                    }
+                    .foregroundColor(.black)
+                    .font(.custom("", size: 30))
+                    .padding()
+                }
             }
             .padding(.horizontal)
             
             // Conditionally show the search bar if "All" filter is selected
-            if selectedFilter == "All" {
-                HStack {
-                    TextField("Search songs...", text: $searchQuery)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                }
-            }
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
