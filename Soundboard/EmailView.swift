@@ -1,3 +1,9 @@
+//
+//  ContentView.swift
+//  Soundboard
+//
+//  Created by Oliver W. Dienhart on 11/8/24
+//
 import SwiftUI
 
 struct EmailView: View {

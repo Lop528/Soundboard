@@ -20,6 +20,7 @@ struct ContentView: View {
     @State var filters = ["Pop", "Rock", "Hip Hop", "Pop", "Pop", "Hip Hop", "Rock", "Hip Hop", "Hip Hop", "Pop", "Rock"]
     
     @State private var selectedFilter: String = "All"
+    @State private var searchQuery: String = ""  // Search query for filtering songs
     
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
@@ -31,7 +32,7 @@ struct ContentView: View {
                     .font(.custom("American Typewriter", size: 45))
                     .bold()
                 Spacer()
-                Button() {
+                Button {
                     playRandomSong()
                 } label: {
                     ZStack {
@@ -41,11 +42,10 @@ struct ContentView: View {
                         Text("Random")
                             .foregroundColor(.black)
                             .font(.custom("American Typewriter", size: 40))
-                        
                     }
                 }
                 Spacer()
-                Button() {
+                Button {
                     stopAllSounds()
                 } label: {
                     ZStack {
@@ -56,7 +56,6 @@ struct ContentView: View {
                             .bold()
                             .foregroundColor(.black)
                             .font(.custom("", size: 40))
-                        
                     }
                 }
                 Text("  ")
@@ -77,11 +76,11 @@ struct ContentView: View {
 
             
             Divider()
+            
             HStack {
                 Menu {
                     Button("All") { selectedFilter = "All" }
                     Button("Hip Hop") { selectedFilter = "Hip Hop" }
-                    Button("Country") { selectedFilter = "Country" }
                     Button("Rock") { selectedFilter = "Rock" }
                     Button("Pop") { selectedFilter = "Pop" }
                 } label: {
@@ -95,14 +94,25 @@ struct ContentView: View {
                             .font(.custom("", size: 30))
                     }
                 }
-//                .font(.custom("", size: 30))
-
                 Spacer()
             }
+            .padding(.horizontal)
+            
+            // Conditionally show the search bar if "All" filter is selected
+            if selectedFilter == "All" {
+                HStack {
+                    TextField("Search songs...", text: $searchQuery)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal)
+                }
+            }
+            
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(Array(zip(fileNames.indices, zip(fileNames, songNames)))
-                            .filter { selectedFilter == "All" || filters[$0.0] == selectedFilter }, id: \.0) { index, song in
+                    ForEach(
+                        filteredSongs(),
+                        id: \.0
+                    ) { index, song in
                         let (fileName, songName) = song
                         Button {
                             playSound(song: songName)
@@ -113,11 +123,6 @@ struct ContentView: View {
                                     .frame(width: 200, height: 200)
                                     .shadow(color: .black, radius: 8)
                                 VStack(spacing: 10) {
-                                    Button() {
-                                        
-                                    } label: {
-                                        
-                                    }
                                     Spacer()
                                     Text(songName)
                                         .frame(width: 180)
@@ -140,9 +145,9 @@ struct ContentView: View {
                             .padding()
                         }
                     }
-                    
                 }
             }
+            
             Button {
                 playSound(song: "NationalAnthem")
             } label: {
@@ -160,6 +165,16 @@ struct ContentView: View {
             }
         }
         .padding()
+    }
+    
+    // Helper function to filter songs based on selected filter and search query
+    func filteredSongs() -> [(Int, (String, String))] {
+        Array(zip(fileNames.indices, zip(fileNames, songNames)))
+            .filter { index, song in
+                let matchesFilter = selectedFilter == "All" || filters[index] == selectedFilter
+                let matchesQuery = searchQuery.isEmpty || song.1.lowercased().contains(searchQuery.lowercased())
+                return matchesFilter && matchesQuery
+            }
     }
     
     func playSound(song: String) {
@@ -183,14 +198,8 @@ struct ContentView: View {
     
     func stopAllSounds() {
         guard let player = player, player.isPlaying else { return }
-        
-        // Cancel any ongoing fade-out to avoid conflicts
         fadeOutTimer?.invalidate()
-        
-        // Start the fade-out effect
         fadeOut(volumeDecreaseInterval: 0.1, duration: 2.0)
-        
-        // Reset the current song when stopping
         currentSong = nil
     }
     
@@ -208,11 +217,11 @@ struct ContentView: View {
             } else {
                 timer.invalidate()
                 player.stop()
-                // Stop the player once volume reaches zero
                 currentSong = nil
             }
         }
     }
+    
     func playRandomSong() {
         if let randomSong = fileNames.randomElement() {
             playSound(song: randomSong)
@@ -225,7 +234,6 @@ struct ContentView: View {
     
 }
 
-
 #Preview {
-    TabBarView()
+    ContentView()
 }
