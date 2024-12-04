@@ -14,10 +14,10 @@ struct ContentView: View {
     @State private var fadeOutTimer: Timer?
     @State private var currentSong: String? = nil
     
-    @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
-    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle"]
-    @State var authors = ["DJ Khaled", "AC/DC", "Travis Scott", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses"]
-    @State var filters = ["Pop", "Rock", "Hip Hop", "Pop", "Pop", "Hip Hop", "Rock", "Hip Hop", "Hip Hop", "Pop", "Rock"]
+    @State var fileNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle", "Bad Moon Rising", "Centuries", "Old Town Road"]
+    @State var songNames = ["All I Do Is Win", "Back In Black", "Fein", "My House", "Cant Touch This", "Crank That Soulja", "Eye of the Tiger", "Alright", "Humble", "Party in the USA", "Welcome to the Jungle", "Bad Moon Rising", "Centuries", "Old Town Road"]
+    @State var authors = ["DJ Khaled", "AC/DC", "Travis Scott", "Flo Rida", "MC Hammer", "Soulja Boy", "Survivor", "Kendrick Lamar", "Kendrick Lamar", "Miley Cyrus", "Guns N' Roses", "John Fogerty", "Fall Out Boy", "Lil Nas X"]
+    @State var filters = ["Pop", "Rock", "Hip Hop", "Pop", "Pop", "Hip Hop", "Rock", "Hip Hop", "Hip Hop", "Pop", "Rock", "Country", "Rock", "Country"]
     
     @State private var selectedFilter: String = "All"
     @State private var searchQuery: String = ""  // Search query for filtering songs
