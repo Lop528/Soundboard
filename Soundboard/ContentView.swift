@@ -62,6 +62,20 @@ struct ContentView: View {
                 Text("  ")
             }
             .padding(10)
+//            Song Length Bar
+//            ZStack(alignment: .leading) {
+//                RoundedRectangle(cornerRadius: 10)
+//                    .frame(height: 10)
+//                    .foregroundColor(.gray.opacity(0.3))
+//                RoundedRectangle(cornerRadius: 10)
+//                    .frame(width: UIScreen.main.bounds.width * CGFloat(songProgress), height: 10)
+//                    .foregroundColor(.blue)
+//            }
+//            .padding()
+            
+
+
+            
             Divider()
             HStack {
                 Menu {
@@ -163,6 +177,9 @@ struct ContentView: View {
         }
     }
     
+
+
+    
     
     func stopAllSounds() {
         guard let player = player, player.isPlaying else { return }
@@ -176,6 +193,9 @@ struct ContentView: View {
         // Reset the current song when stopping
         currentSong = nil
     }
+    
+ 
+
     func fadeOut(volumeDecreaseInterval: TimeInterval, duration: TimeInterval) {
         guard let player = player else { return }
         
@@ -200,6 +220,8 @@ struct ContentView: View {
             print("The fileNames array is empty.")
         }
     }
+    
+
     
 }
 
