@@ -20,7 +20,7 @@ struct ContentView: View {
     @State var filters = ["Pop", "Rock", "Hip Hop", "Pop", "Pop", "Hip Hop", "Rock", "Hip Hop", "Hip Hop", "Pop", "Rock", "Country", "Rock", "Country"]
     
     @State private var selectedFilter: String = "All"
-    @State private var searchQuery: String = ""  // Search query for filtering songs
+    @State private var searchQuery: String = ""
     
     var body: some View {
         let columns = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
@@ -61,19 +61,6 @@ struct ContentView: View {
                 Text("  ")
             }
             .padding(10)
-//            Song Length Bar
-//            ZStack(alignment: .leading) {
-//                RoundedRectangle(cornerRadius: 10)
-//                    .frame(height: 10)
-//                    .foregroundColor(.gray.opacity(0.3))
-//                RoundedRectangle(cornerRadius: 10)
-//                    .frame(width: UIScreen.main.bounds.width * CGFloat(songProgress), height: 10)
-//                    .foregroundColor(.blue)
-//            }
-//            .padding()
-            
-
-
             
             Divider()
             
@@ -81,6 +68,7 @@ struct ContentView: View {
                 Menu {
                     Button("All") { selectedFilter = "All" }
                     Button("Hip Hop") { selectedFilter = "Hip Hop" }
+                    Button("Country") { selectedFilter = "Country" }
                     Button("Rock") { selectedFilter = "Rock" }
                     Button("Pop") { selectedFilter = "Pop" }
                 } label: {
@@ -94,6 +82,7 @@ struct ContentView: View {
                             .font(.custom("", size: 30))
                     }
                 }
+                Spacer()
                 if selectedFilter == "All" {
                     HStack {
                         TextField("Search songs...", text: $searchQuery)
@@ -107,14 +96,10 @@ struct ContentView: View {
             }
             .padding(.horizontal)
             
-            // Conditionally show the search bar if "All" filter is selected
             
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(
-                        filteredSongs(),
-                        id: \.0
-                    ) { index, song in
+                    ForEach(filteredSongs(),id: \.0) { index, song in
                         let (fileName, songName) = song
                         Button {
                             playSound(song: songName)
